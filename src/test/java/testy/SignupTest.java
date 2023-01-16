@@ -11,15 +11,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static utility.Actions.*;
 
-public class Signup extends TestConfig {
+public class SignupTest extends TestConfig {
 
     @Test
-    public void signupCorrectCredentials() {
+    public void signupCorrectCredentialsAccountExist() {
         waitForClickabilityAndClick(By.cssSelector("button[aria-label='Sign Up']"));
         waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
         waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
         waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Sign up')]"));
-//        Assert.assertEquals("Verify",waitForVisibilityAndGetText(By.xpath("//h3[@class='auth-popup__header-title']")));
+        assertEquals("User already exists", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='email'] span.b2._error")));
     }
 
     @Test

@@ -77,4 +77,10 @@ public class Actions {
         js.executeScript("document.querySelector('" + cssSelector + "').scrollTop=200");
     }
 
+    public static WebElement waitAndSwitchForFrame(By by){
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+
+    }
+
 }
