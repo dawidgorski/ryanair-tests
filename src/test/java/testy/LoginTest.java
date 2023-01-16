@@ -11,12 +11,11 @@ import static utility.Actions.*;
 public class LoginTest extends TestConfig {
 
     @Test
-    public void loginCorrectCredentials() throws InterruptedException {
+    public void loginCorrectCredentials(){
         waitForClickabilityAndClick(By.cssSelector("button[aria-label='Log In']"));
         waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
         waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
         waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Log in')]"));
-        Thread.sleep(3000);
         waitForVisibilityAndGetText(By.xpath("//h3[@class='auth-popup__header-title']"));
     }
 
