@@ -33,11 +33,12 @@ public class SearchFlightsTest extends TestConfig {
         waitForClickabilityAndClick(By.cssSelector("[class='datepicker__calendar datepicker__calendar--left'] [data-id='" + getTomorrowDate() + "'] "));
         waitForClickabilityAndClick(By.cssSelector("button[aria-label=Done]"));
         waitForClickabilityAndClick(By.cssSelector("button[data-ref=flight-search-widget__cta]"));
+        assertTrue(waitForVisibility(By.cssSelector("flights-summary-container")));
 
     }
 
     @Test
-    public void searchFlightFlexibleDatesOneAdultCorrectData(){
+    public void searchFlightFlexibleDatesOneAdultCorrectData() {
         setFlightDeparture("Warsaw Modlin");
         setFlightDestination("London Stansted");
 
@@ -45,13 +46,15 @@ public class SearchFlightsTest extends TestConfig {
         waitForClickabilityAndClick(By.cssSelector("[data-ref='flexible-dates__month-item']"));
         waitForClickabilityAndClick(By.cssSelector("[data-ref='flexible-dates__day-item']"));
         waitForClickabilityAndClick(By.cssSelector("[aria-label='Apply'] "));
-
         waitForClickabilityAndClick(By.cssSelector("button[aria-label=Done]"));
         waitForClickabilityAndClick(By.cssSelector("button[data-ref=flight-search-widget__cta]"));
+        assertTrue(waitForVisibility(By.cssSelector(".destination__container")));
+
+
     }
 
     @Test
-    public void searchFlightFlexibleDatesOneAdultNoResults(){
+    public void searchFlightFlexibleDatesOneAdultNoResults() {
         setFlightDeparture("Warsaw Modlin");
         setFlightDestination("Riga");
         waitForClickabilityAndClick(By.xpath("//span[contains(text(),'Flexible dates')]"));
@@ -60,9 +63,7 @@ public class SearchFlightsTest extends TestConfig {
         waitForClickabilityAndClick(By.cssSelector("[aria-label='Apply'] "));
         waitForClickabilityAndClick(By.cssSelector("button[aria-label=Done]"));
         waitForClickabilityAndClick(By.cssSelector("button[data-ref=flight-search-widget__cta]"));
-
-        boolean noFlightsIconVisible = waitForVisibility(By.cssSelector("[iconid='glyphs/no-flights']"));
-        assertTrue(noFlightsIconVisible);
+        assertTrue(waitForVisibility(By.cssSelector("[iconid='glyphs/no-flights']")));
 
     }
 }
