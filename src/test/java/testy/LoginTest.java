@@ -2,46 +2,70 @@ package testy;
 
 import config.TestConfig;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.LoginWindow;
+import pages.MainPage;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static utility.Actions.*;
 
 public class LoginTest extends TestConfig {
 
+    String correctEmail = "test@qa.team";
+    String correctPassword = "TeamTeam1";
+
     @Test
-    public void loginCorrectCredentials(){
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Log In']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Log in')]"));
-        waitForVisibilityAndGetText(By.xpath("//h3[@class='auth-popup__header-title']"));
+    public void loginCorrectCredentials() {
+
+
+        MainPage mainPage = new MainPage();
+        String loggerUserEmail = mainPage
+                .openLoginWindow()
+                .loginWithCredentials(correctEmail, correctPassword)
+                .submitLoginForm()
+                .getLoggedUserEmail();
+        assertEquals(correctEmail, loggerUserEmail);
     }
 
     @Test
     public void loginWithoutCredentials() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Log In']"));
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Log in')]"));
-        assertEquals("Email address is required", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='email'] span.b2")));
-        assertEquals("Password is required", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        MainPage mainPage = new MainPage();
+        LoginWindow loginWindow = mainPage
+                .openLoginWindow()
+                .loginWithCredentials("", "")
+                .submitLoginForm();
+        assertEquals("Email address is required", loginWindow.getEmailError());
+        assertEquals("Password is required", loginWindow.getPasswordError());
     }
 
     @Test
     public void loginWithoutPassword() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Log In']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Log in')]"));
-        assertEquals("Password is required", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        MainPage mainPage = new MainPage();
+        LoginWindow loginWindow = mainPage
+                .openLoginWindow()
+                .loginWithCredentials(correctEmail, "")
+                .submitLoginForm();
+        assertEquals("Password is required", loginWindow.getPasswordError());
     }
 
     @Test
     public void loginWithoutEmail() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Log In']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Log in')]"));
-        assertEquals("Email address is required", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='email'] span.b2")));
-
+        MainPage mainPage = new MainPage();
+        LoginWindow loginWindow = mainPage
+                .openLoginWindow()
+                .loginWithCredentials("", correctPassword)
+                .submitLoginForm();
+        assertEquals("Email address is required", loginWindow.getEmailError());
     }
 
 
