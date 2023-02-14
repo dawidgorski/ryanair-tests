@@ -2,34 +2,32 @@ package testy;
 
 import config.TestConfig;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static utility.Actions.*;
+import static utility.Actions.getTodayDate;
+import static utility.Actions.getTomorrowDate;
 
 public class FindHotelTest extends TestConfig {
 
     @Test
-    public void showHotelsList(){
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='hotels']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("#input-button__locations-or-properties"), "Warsaw");
-        waitForClickabilityAndClick(By.cssSelector("div.tooltip-inner [classlist='icon-14']"));
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Search']"));
-        waitForClickabilityAndClick(By.cssSelector("[uniqueid='check-in'"));
-        waitForClickabilityAndClick(By.cssSelector("[role='tooltip'] [data-id='" + getTodayDate() + "']"));
-        waitForClickabilityAndClick(By.cssSelector("[role='tooltip'] [data-id='" + getTomorrowDate() + "']"));
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Search']"));
-        assertTrue(waitForVisibility(By.cssSelector("rooms-list")));
-
+    public void showHotelsList() {
+        boolean visibilityOfRoomsList = mainPage
+                .openHotelsTab()
+                .enterLocationOrProperty("Warsaw")
+                .enterSimpleCheckInAndCheckout(getTodayDate(), getTomorrowDate())
+                .clickSearchButton()
+                .checkVisibilityOfRoomslist();
+        assertTrue(visibilityOfRoomsList);
     }
 
     @Test
-    public void searchHotelsWithoutDates(){
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='hotels']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("#input-button__locations-or-properties"), "Warsaw");
-        waitForClickabilityAndClick(By.cssSelector("div.tooltip-inner [classlist='icon-14']"));
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Search']"));
-        assertEquals("Please select travel dates",waitForVisibilityAndGetText(By.cssSelector("[uniqueid='check-in'] [data-ref='input-button__error']")));
+    public void searchHotelsWithoutDates() {
+        String checkInError = mainPage
+                .openHotelsTab()
+                .enterLocationOrProperty("Warsaw")
+                .clickSearchButton()
+                .getCheckInError();
+        assertEquals("Please select travel dates", checkInError);
     }
 }

@@ -1,111 +1,105 @@
 package testy;
 
-import config.DriverSingleton;
 import config.TestConfig;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import pages.SignupWindow;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static utility.Actions.*;
 
 public class SignupTest extends TestConfig {
 
     @Test
     public void signupCorrectCredentialsAccountExist() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Sign Up']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Sign up')]"));
-        assertEquals("User already exists", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='email'] span.b2._error")));
+        String emailError = mainPage
+                .openSignUpWindow()
+                .signUpWithCredentials("test@qa.team", "TeamTeam1")
+                .getEmailError();
+        assertEquals("User already exists", emailError);
     }
 
     @Test
     public void signupIncorrectEmail() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Sign Up']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test.team");
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Sign up')]"));
-        assertEquals("Invalid email address format", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='email'] span.b2")));
+        String emailError = mainPage
+                .openSignUpWindow()
+                .signUpWithCredentials("test.team", "TeamTeam1")
+                .getEmailError();
+        assertEquals("Invalid email address format", emailError);
     }
 
     @Test
     public void signupWithoutEmail() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Sign Up']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), "TeamTeam1");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Sign up')]"));
-        assertEquals("Email address is required", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='email'] span.b2")));
+        String emailError = mainPage
+                .openSignUpWindow()
+                .signUpWithCredentials("", "TeamTeam1")
+                .getEmailError();
+        assertEquals("Email address is required", emailError);
     }
 
     @Test
     public void signupWithoutPassword() {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Sign Up']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Sign up')]"));
-        assertEquals("Password is required", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        String passwordError = mainPage
+                .openSignUpWindow()
+                .signUpWithCredentials("test@qa.team", "")
+                .getPasswordError();
+        assertEquals("Password is required", passwordError);
     }
 
-    public void signupWithWrongPassword(String password, boolean one_number_requirement, boolean eight_characters, boolean one_lower, boolean one_upper) {
-        waitForClickabilityAndClick(By.cssSelector("button[aria-label='Sign Up']"));
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='email']"), "test@qa.team");
-        waitForVisibilityAndSendKeys(By.cssSelector("input[name='password']"), password);
-        waitForClickabilityAndClick(By.xpath("//button[contains(text(),'Sign up')]"));
-        List<Boolean> errors_thrown = waitForVisibilityAllElementsAndGetErrorsList(By.cssSelector("ry-auth-password-validation icon"));
+    public void signupWithWrongPasswordAndGetPasswordErrors(String password, boolean one_number_requirement, boolean eight_characters, boolean one_lower, boolean one_upper) {
+        SignupWindow signupWindow = mainPage
+                .openSignUpWindow()
+                .signUpWithCredentials("test@qa.team", password);
 
-        assertEquals(one_number_requirement, errors_thrown.get(0), "At least one number");
-        assertEquals(eight_characters, errors_thrown.get(1), "At least 8 characters");
-        assertEquals(one_lower, errors_thrown.get(2), "At least one lower case letter");
-        assertEquals(one_upper, errors_thrown.get(3), "At least one upper case letter");
+        String passwordError = signupWindow.getPasswordError();
+        assertEquals("Please check the requirements on your right", passwordError);
+
+        List<Boolean> passwordErrorsList = signupWindow.getPasswordErrorsList();
+
+        assertEquals(one_number_requirement, passwordErrorsList.get(0), "At least one number");
+        assertEquals(eight_characters, passwordErrorsList.get(1), "At least 8 characters");
+        assertEquals(one_lower, passwordErrorsList.get(2), "At least one lower case letter");
+        assertEquals(one_upper, passwordErrorsList.get(3), "At least one upper case letter");
     }
 
     @Test
     public void signupWithWrongPassword_onlyLowerCase() {
-        signupWithWrongPassword("a", false, false, true, false);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("a", false, false, true, false);
     }
 
     @Test
     public void signupWithWrongPassword_onlyUpperCase() {
-        signupWithWrongPassword("A", false, false, false, true);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("A", false, false, false, true);
     }
 
     @Test
     public void signupWithWrongPassword_onlyNumber() {
-        signupWithWrongPassword("1", true, false, false, false);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("1", true, false, false, false);
     }
 
     @Test
     public void signupWithWrongPassword_OneLowerCaseOneUpper() {
-        signupWithWrongPassword("aA", false, false, true, true);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("aA", false, false, true, true);
     }
 
     @Test
     public void signupWithWrongPassword_noNumber() {
-        signupWithWrongPassword("TestTest", false, true, true, true);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("TestTest", false, true, true, true);
     }
 
     @Test
     public void signupWithWrongPassword_noEightCharacters() {
-        signupWithWrongPassword("Test1", true, false, true, true);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("Test1", true, false, true, true);
     }
 
     @Test
     public void signupWithWrongPassword_noUpperCase() {
-        signupWithWrongPassword("eesteeee1", true, true, true, false);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("eesteeee1", true, true, true, false);
     }
 
     @Test
     public void signupWithWrongPassword_noLowerCase() {
-        signupWithWrongPassword("EAHAHSHASS1", true, true, false, true);
-        assertEquals("Please check the requirements on your right", waitForVisibilityAndGetText(By.cssSelector("ry-input-d[name='password'] span.b2")));
+        signupWithWrongPasswordAndGetPasswordErrors("EAHAHSHASS1", true, true, false, true);
     }
 
 }
