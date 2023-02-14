@@ -3,9 +3,10 @@ package pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static utility.Actions.*;
+import static utility.Actions.waitForVisibilityAndGetText_webElement;
+import static utility.Actions.waitForVisibilityAndSendKeys_webElement;
 
-public class LoginWindow extends MainPage{
+public class LoginWindow extends MainPage {
 
     @FindBy(css = "input[name='email']")
     private WebElement emailTextField;
@@ -17,32 +18,35 @@ public class LoginWindow extends MainPage{
     private WebElement logInConfirmButton;
 
     @FindBy(css = "ry-input-d[name='email'] span.b2")
-    private WebElement emailErrorField;
+    private WebElement emailErrorLabel;
 
     @FindBy(css = "ry-input-d[name='password'] span.b2")
-    private WebElement passwordErrorField;
+    private WebElement passwordErrorLabel;
+
+    @FindBy(xpath = "//h3[contains(text(),'Register this device')]")
+    private WebElement afterLoginVerificationHeader;
 
     public LoginWindow() {
         super();
     }
 
-    public LoginWindow loginWithCredentials(String email, String password){
+    public LoginWindow loginWithCredentials(String email, String password) {
         waitForVisibilityAndSendKeys_webElement(emailTextField, email);
         waitForVisibilityAndSendKeys_webElement(passwordTextField, password);
-        return this;
-    }
-
-    public String getEmailError(){
-        return waitForVisibilityAndGetText_webElement(emailErrorField);
-    }
-
-    public String getPasswordError(){
-        return waitForVisibilityAndGetText_webElement(passwordErrorField);
-    }
-
-    public LoginWindow submitLoginForm(){
         logInConfirmButton.click();
         return this;
+    }
+
+    public String getEmailError() {
+        return waitForVisibilityAndGetText_webElement(emailErrorLabel);
+    }
+
+    public String getPasswordError() {
+        return waitForVisibilityAndGetText_webElement(passwordErrorLabel);
+    }
+
+    public String getAfterLoginVerificationHeader() {
+        return waitForVisibilityAndGetText_webElement(afterLoginVerificationHeader);
     }
 
 }
