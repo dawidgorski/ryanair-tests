@@ -1,0 +1,95 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
+
+import static utility.Actions.*;
+
+public class FlightsTab extends MainPage {
+
+    @FindBy(id = "input-button__destination")
+    WebElement destinationButton;
+
+    @FindBy(id = "input-button__departure")
+    WebElement departureButton;
+
+    @FindBy(xpath = "//span[contains(text(),'Flexible dates')]")
+    WebElement flexibleDatesTab;
+
+    @FindBy(css = "[data-ref='flexible-dates__month-item']")
+    List<WebElement> monthsList;
+
+    @FindBy(css = "[data-ref='flexible-dates__day-item']")
+    List<WebElement> dayOfTheWeekList;
+
+    @FindBy(css = "[aria-label='Apply']")
+    WebElement applyButton;
+
+    @FindBy(css = "button[aria-label=Done]")
+    WebElement doneButton;
+
+    @FindBy(css = "button[data-ref=flight-search-widget__cta]")
+    WebElement searchButton;
+
+    @FindBy(css = "flights-summary-container")
+    WebElement summaryContainer;
+
+    @FindBy(css = ".destination__container")
+    WebElement destinationContainer;
+
+    @FindBy(css = "[iconid='glyphs/no-flights']")
+    private WebElement noFlightsIcon;
+
+    public FlightsTab() {
+        PageFactory.initElements(driver, this);
+    }
+
+    public FlightsTab setFlightDestination(String airport) {
+        waitForVisibilityAndSendKeys_webElement(destinationButton, airport);
+        waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
+        return this;
+    }
+
+    public FlightsTab setFlightDeparture(String airport) {
+        waitForVisibilityAndSendKeys_webElement(departureButton, airport);
+        waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
+        return this;
+    }
+
+    public FlightsTab setExactDates(String departureDate, String returnDate) {
+        waitForClickabilityAndClick(By.cssSelector("[class='datepicker__calendar datepicker__calendar--left'] [data-id='" + departureDate + "'] "));
+        waitForClickabilityAndClick(By.cssSelector("[class='datepicker__calendar datepicker__calendar--left'] [data-id='" + returnDate + "'] "));
+        return this;
+    }
+
+    public FlightsTab setFlexibleDates() {
+        waitForClickabilityAndClick_webElement(flexibleDatesTab);
+        monthsList.get(0).click();
+        dayOfTheWeekList.get(0).click();
+        applyButton.click();
+        return this;
+    }
+
+    public FlightsTab clickDoneAndSearchButton() {
+        doneButton.click();
+        searchButton.click();
+        return this;
+    }
+
+    public boolean ifSummaryContainerVisible() {
+        return waitForVisibility_webElement(summaryContainer);
+    }
+
+    public boolean ifDestinationContainerVisible() {
+        return waitForVisibility(By.cssSelector(".destination__container"));
+    }
+
+    public boolean ifNoFlightsIconVisible() {
+        return waitForVisibility_webElement(noFlightsIcon);
+    }
+
+}
