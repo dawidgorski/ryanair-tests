@@ -16,20 +16,52 @@ public class MainPage {
     @FindBy(css = "button[aria-label='Log In']")
     private WebElement logInButton;
 
+    @FindBy(css = "button[aria-label='Sign Up']")
+    private WebElement signUpButton;
+
+    @FindBy(css = "button[aria-label='flights']")
+    private WebElement flightsTAb;
+
+    @FindBy(css = "button[aria-label='Car Hire']")
+    private WebElement hireCarTAb;
+
+    @FindBy(css = "button[aria-label='hotels']")
+    private WebElement hotelsTab;
+
     @FindBy(css = "div.ry-header__user-name span")
-    private WebElement loggedUserField;
+    private WebElement loggedUserLabel;
 
     public MainPage() {
         driver = DriverSingleton.getInstance();
         PageFactory.initElements(driver, this);
     }
 
-    public LoginWindow openLoginWindow(){
+    public SignupWindow openSignUpWindow() {
+        waitForClickabilityAndClick_webElement(signUpButton);
+        return new SignupWindow();
+    }
+
+    public LoginWindow openLoginWindow() {
         waitForClickabilityAndClick_webElement(logInButton);
         return new LoginWindow();
     }
 
-    public String getLoggedUserEmail(){
-        return waitForVisibilityAndGetText_webElement(loggedUserField);
+    public FlightsTab openFlightsTab() {
+        waitForClickabilityAndClick_webElement(flightsTAb);
+        return new FlightsTab();
+    }
+
+    public HireCarTab openHireCarTab() {
+        waitForClickabilityAndClick_webElement(hireCarTAb);
+        return new HireCarTab();
+    }
+
+    public HotelsTab openHotelsTab() {
+        waitForClickabilityAndClick_webElement(hotelsTab);
+        return new HotelsTab();
+    }
+
+    public String getLoggedUserEmail() {
+        return waitForVisibilityAndGetText_webElement(loggedUserLabel);
     }
 }
