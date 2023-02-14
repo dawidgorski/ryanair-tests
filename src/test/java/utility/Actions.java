@@ -15,72 +15,107 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Actions {
+
     static WebDriverWait wait;
 
-    public static boolean waitForVisibility(By by){
+    public static boolean waitForVisibility(By by) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
     }
 
-    public static void waitForVisibilityAndSendKeys(By by,String keys) {
+    public static boolean waitForVisibility_webElement(WebElement element) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(Keys.CONTROL+"a");
+        return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
+    }
+
+    public static void waitForVisibilityAndSendKeys(By by, String keys) {
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(Keys.CONTROL + "a");
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(Keys.DELETE);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(keys);
     }
 
-    public static void waitForClickabilityAndClick(By by){
+    public static void waitForVisibilityAndSendKeys_webElement(WebElement element, String keys) {
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(Keys.CONTROL + "a");
+        wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(Keys.DELETE);
+        wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(keys);
+    }
+
+    public static void waitForClickabilityAndClick(By by) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 
-    public static String waitForVisibilityAndGetText(By by){
+    public static void waitForClickabilityAndClick_webElement(WebElement element) {
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+    }
+
+    public static String waitForVisibilityAndGetText(By by) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).getText();
     }
 
-    public static List<String> waitForVisibilityAllElementsAndGetTextList(By by){
+    public static String waitForVisibilityAndGetText_webElement(WebElement element) {
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        return wait.until(ExpectedConditions.visibilityOf(element)).getText();
+    }
+
+    public static List<String> waitForVisibilityAllElementsAndGetTextList(By by) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
                 .stream().map(WebElement::getText)
                 .collect(Collectors.toList());
     }
 
-    public static List<Boolean> waitForVisibilityAllElementsAndGetErrorsList(By by){
+    public static List<Boolean> waitForVisibilityAllElementsAndGetErrorsList(By by) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
-                .stream().map(e->e.getAttribute("class"))
+                .stream().map(e -> e.getAttribute("class"))
                 .map(e -> !e.equals("icon--error"))
                 .collect(Collectors.toList());
     }
 
-    public static WebElement waitForVisibilityOfElement(By by){
+    public static List<Boolean> waitForVisibilityAllElementsAndGetErrorsList_webElement(List<WebElement> webElements) {
         wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-
+        return wait.until(ExpectedConditions.visibilityOfAllElements(webElements))
+                .stream().map(e -> e.getAttribute("class"))
+                .map(e -> !e.equals("icon--error"))
+                .collect(Collectors.toList());
     }
 
-    public static String getTodayDate(){
+    public static WebElement waitForVisibilityOfElement(By by) {
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    public static String getTodayDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return formatter.format(date);
     }
 
-    public static String getTomorrowDate(){
+    public static String getTomorrowDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(new Date().getTime() + 86400000);
         return formatter.format(date);
     }
 
+    public static String getDayAfterTomorrowDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(new Date().getTime() + 2 * 86400000);
+        return formatter.format(date);
+    }
+
+    public static WebElement waitAndSwitchForFrame(By by) {
+        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
     public void scrollDown(String cssSelector) {
         JavascriptExecutor js = (JavascriptExecutor) DriverSingleton.getInstance();
         js.executeScript("document.querySelector('" + cssSelector + "').scrollTop=200");
-    }
-
-    public static WebElement waitAndSwitchForFrame(By by){
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-
     }
 
 }
