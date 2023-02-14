@@ -27,10 +27,6 @@ public class HotelsTab extends MainPage {
     @FindBy(css = "rooms-list")
     WebElement roomsList;
 
-    public HotelsTab() {
-        PageFactory.initElements(driver, this);
-    }
-
     public HotelsTab enterLocationOrProperty(String locationOrProperty) {
         waitForVisibilityAndSendKeys_webElement(destinationOrPropertyTextField, locationOrProperty);
         waitForClickabilityAndClick_webElement(dropDownFirstResult);

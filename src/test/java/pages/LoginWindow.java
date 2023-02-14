@@ -26,10 +26,6 @@ public class LoginWindow extends MainPage {
     @FindBy(xpath = "//h3[contains(text(),'Register this device')]")
     private WebElement afterLoginVerificationHeader;
 
-    public LoginWindow() {
-        super();
-    }
-
     public LoginWindow loginWithCredentials(String email, String password) {
         waitForVisibilityAndSendKeys_webElement(emailTextField, email);
         waitForVisibilityAndSendKeys_webElement(passwordTextField, password);
