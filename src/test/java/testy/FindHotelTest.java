@@ -18,6 +18,7 @@ public class FindHotelTest extends TestConfig {
                 .enterSimpleCheckInAndCheckout(getTodayDate(), getTomorrowDate())
                 .clickSearchButton()
                 .checkVisibilityOfRoomslist();
+
         assertTrue(visibilityOfRoomsList);
     }
 
