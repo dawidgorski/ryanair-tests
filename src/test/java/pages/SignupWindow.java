@@ -27,6 +27,10 @@ public class SignupWindow extends MainPage {
     @FindBy(css = "ry-auth-password-validation icon")
     private List<WebElement> passwordErrorsFieldList;
 
+    public SignupWindow() {
+        super();
+    }
+
     public SignupWindow signUpWithCredentials(String email, String password) {
         waitForVisibilityAndSendKeys_webElement(emailTextField, email);
         waitForVisibilityAndSendKeys_webElement(passwordTextField, password);

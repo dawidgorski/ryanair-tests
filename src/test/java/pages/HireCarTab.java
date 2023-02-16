@@ -19,6 +19,10 @@ public class HireCarTab extends MainPage {
     @FindBy(css = "div.car-hire-container__header")
     private WebElement carResultsContainer;
 
+    public HireCarTab() {
+        super();
+    }
+
     public HireCarTab searchCarDefaultDates(String location) {
         waitForVisibilityAndSendKeys_webElement(pickUpLocationTextField, location);
         waitForClickabilityAndClick_webElement(firstLocationResult);

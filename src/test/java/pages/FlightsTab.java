@@ -44,6 +44,10 @@ public class FlightsTab extends MainPage {
     @FindBy(css = "[iconid='glyphs/no-flights']")
     private WebElement noFlightsIcon;
 
+    public FlightsTab() {
+        PageFactory.initElements(driver, this);
+    }
+
     public FlightsTab setFlightDestination(String airport) {
         waitForVisibilityAndSendKeys_webElement(destinationButton, airport);
         waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
