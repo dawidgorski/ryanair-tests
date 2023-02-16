@@ -14,7 +14,7 @@ public class FindHotelTest extends TestConfig {
     public void showHotelsList() {
         boolean visibilityOfRoomsList = mainPage
                 .openHotelsTab()
-                .enterLocationOrProperty("Warsaw")
+                .enterLocationOrProperty("Berlin")
                 .enterSimpleCheckInAndCheckout(getTodayDate(), getTomorrowDate())
                 .clickSearchButton()
                 .checkVisibilityOfRoomslist();
