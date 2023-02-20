@@ -17,7 +17,7 @@ public class TestConfig {
     public MainPage mainPage;
 
     @RegisterExtension
-    static RyanairTestWatcher watcher = new RyanairTestWatcher(DriverSingleton.getInstance(), "src/test/java/screenshots");
+    static RyanairTestWatcher watcher = new RyanairTestWatcher(DriverSingleton.getInstance(), "screenshots");
 
     @BeforeAll
     public static void setupAll() {
