@@ -1,4 +1,4 @@
-package testy;
+package tests;
 
 import config.TestConfig;
 import org.junit.jupiter.api.Test;
