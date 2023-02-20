@@ -17,60 +17,64 @@ import java.util.stream.Collectors;
 public class Actions {
 
     static WebDriverWait wait;
+    
+    private static WebDriverWait getWebDriverWaitInstance(){
+        return new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+    }
 
     public static boolean waitForVisibility(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
     }
 
     public static boolean waitForVisibility_webElement(WebElement element) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
     }
 
     public static void waitForVisibilityAndSendKeys(By by, String keys) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(Keys.CONTROL + "a");
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(Keys.DELETE);
         wait.until(ExpectedConditions.visibilityOfElementLocated(by)).sendKeys(keys);
     }
 
     public static void waitForVisibilityAndSendKeys_webElement(WebElement element, String keys) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(Keys.CONTROL + "a");
         wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(Keys.DELETE);
         wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(keys);
     }
 
     public static void waitForClickabilityAndClick(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         wait.until(ExpectedConditions.elementToBeClickable(by)).click();
     }
 
     public static void waitForClickabilityAndClick_webElement(WebElement element) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     public static String waitForVisibilityAndGetText(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).getText();
     }
 
     public static String waitForVisibilityAndGetText_webElement(WebElement element) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOf(element)).getText();
     }
 
     public static List<String> waitForVisibilityAllElementsAndGetTextList(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
                 .stream().map(WebElement::getText)
                 .collect(Collectors.toList());
     }
 
     public static List<Boolean> waitForVisibilityAllElementsAndGetErrorsList(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by))
                 .stream().map(e -> e.getAttribute("class"))
                 .map(e -> !e.equals("icon--error"))
@@ -78,7 +82,7 @@ public class Actions {
     }
 
     public static List<Boolean> waitForVisibilityAllElementsAndGetErrorsList_webElement(List<WebElement> webElements) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfAllElements(webElements))
                 .stream().map(e -> e.getAttribute("class"))
                 .map(e -> !e.equals("icon--error"))
@@ -86,7 +90,7 @@ public class Actions {
     }
 
     public static WebElement waitForVisibilityOfElement(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
@@ -109,7 +113,7 @@ public class Actions {
     }
 
     public static WebElement waitAndSwitchForFrame(By by) {
-        wait = new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
+        wait = getWebDriverWaitInstance();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
