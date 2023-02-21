@@ -24,7 +24,7 @@ public class Actions {
 
     public static boolean waitForVisibility(By by) {
         wait = getWebDriverWaitInstance();
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by))!=null;
     }
 
     public static boolean waitForVisibility_webElement(WebElement element) {
@@ -44,6 +44,13 @@ public class Actions {
         wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(Keys.CONTROL + "a");
         wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(Keys.DELETE);
         wait.until(ExpectedConditions.visibilityOf(element)).sendKeys(keys);
+    }
+
+    public static void sendKeys_webElement(WebElement element, String keys) {
+        wait = getWebDriverWaitInstance();
+        element.sendKeys(Keys.CONTROL + "a");
+        element.sendKeys(Keys.DELETE);
+        element.sendKeys(keys);
     }
 
     public static void waitForClickabilityAndClick(By by) {
