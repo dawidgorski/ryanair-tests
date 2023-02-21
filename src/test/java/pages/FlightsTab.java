@@ -49,13 +49,13 @@ public class FlightsTab extends MainPage {
     }
 
     public FlightsTab setFlightDestination(String airport) {
-        waitForVisibilityAndSendKeys_webElement(destinationButton, airport);
+        destinationButton.sendKeys(airport);
         waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
         return this;
     }
 
     public FlightsTab setFlightDeparture(String airport) {
-        waitForVisibilityAndSendKeys_webElement(departureButton, airport);
+        sendKeys_webElement(departureButton, airport);
         waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
         return this;
     }
@@ -67,7 +67,7 @@ public class FlightsTab extends MainPage {
     }
 
     public FlightsTab setFlexibleDates() {
-        waitForClickabilityAndClick_webElement(flexibleDatesTab);
+        waitForClickabilityAndClick_webElement(flexibleDatesTab); //wait for open calendar
         monthsList.get(0).click();
         dayOfTheWeekList.get(0).click();
         applyButton.click();

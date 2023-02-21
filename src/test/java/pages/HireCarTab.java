@@ -24,9 +24,9 @@ public class HireCarTab extends MainPage {
     }
 
     public HireCarTab searchCarDefaultDates(String location) {
-        waitForVisibilityAndSendKeys_webElement(pickUpLocationTextField, location);
-        waitForClickabilityAndClick_webElement(firstLocationResult);
-        waitForClickabilityAndClick_webElement(submitSearchCarButton);
+        waitForVisibilityAndSendKeys_webElement(pickUpLocationTextField, location); //wait for hireCar tab
+        waitForClickabilityAndClick_webElement(firstLocationResult); //wait for dropdown menu
+        submitSearchCarButton.click();
         return this;
     }
 

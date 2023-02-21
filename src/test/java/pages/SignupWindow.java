@@ -32,22 +32,22 @@ public class SignupWindow extends MainPage {
     }
 
     public SignupWindow signUpWithCredentials(String email, String password) {
-        waitForVisibilityAndSendKeys_webElement(emailTextField, email);
-        waitForVisibilityAndSendKeys_webElement(passwordTextField, password);
+        waitForVisibilityAndSendKeys_webElement(emailTextField, email); //wait for popup signupwindow
+        passwordTextField.sendKeys(password);
         signUpConfirmButton.click();
         return this;
     }
 
     public String getEmailError() {
-        return waitForVisibilityAndGetText_webElement(emailErrorLabel);
+        return waitForVisibilityAndGetText_webElement(emailErrorLabel); // wait for email error label
     }
 
     public String getPasswordError() {
-        return waitForVisibilityAndGetText_webElement(passwordErrorLabel);
+        return passwordErrorLabel.getText();
     }
 
     public List<Boolean> getPasswordErrorsList() {
-        return waitForVisibilityAllElementsAndGetErrorsList_webElement(passwordErrorsFieldList);
+        return waitForVisibilityAllElementsAndGetErrorsList_webElement(passwordErrorsFieldList); //wait for password error hint
     }
 
 

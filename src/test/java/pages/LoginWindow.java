@@ -3,8 +3,7 @@ package pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static utility.Actions.waitForVisibilityAndGetText_webElement;
-import static utility.Actions.waitForVisibilityAndSendKeys_webElement;
+import static utility.Actions.*;
 
 public class LoginWindow extends MainPage {
 
@@ -31,22 +30,23 @@ public class LoginWindow extends MainPage {
     }
 
     public LoginWindow loginWithCredentials(String email, String password) {
-        waitForVisibilityAndSendKeys_webElement(emailTextField, email);
-        waitForVisibilityAndSendKeys_webElement(passwordTextField, password);
+        waitForVisibilityAndSendKeys_webElement(emailTextField, email); //wait for popup loginwindow
+        sendKeys_webElement(passwordTextField, password);
         logInConfirmButton.click();
         return this;
     }
 
     public String getEmailError() {
-        return waitForVisibilityAndGetText_webElement(emailErrorLabel);
+        return emailErrorLabel.getText();
     }
 
     public String getPasswordError() {
-        return waitForVisibilityAndGetText_webElement(passwordErrorLabel);
+        return passwordErrorLabel.getText();
     }
 
     public String getAfterLoginVerificationHeader() {
-        return waitForVisibilityAndGetText_webElement(afterLoginVerificationHeader);
+        return waitForVisibilityAndGetText_webElement(afterLoginVerificationHeader); // wait for header
+
     }
 
 }

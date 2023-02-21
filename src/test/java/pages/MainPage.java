@@ -6,9 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static utility.Actions.waitForClickabilityAndClick_webElement;
-import static utility.Actions.waitForVisibilityAndGetText_webElement;
-
 public class MainPage {
 
     static WebDriver driver;
@@ -37,31 +34,31 @@ public class MainPage {
     }
 
     public SignupWindow openSignUpWindow() {
-        waitForClickabilityAndClick_webElement(signUpButton);
+        signUpButton.click();
         return new SignupWindow();
     }
 
     public LoginWindow openLoginWindow() {
-        waitForClickabilityAndClick_webElement(logInButton);
+        logInButton.click();
         return new LoginWindow();
     }
 
     public FlightsTab openFlightsTab() {
-        waitForClickabilityAndClick_webElement(flightsTAb);
+        flightsTAb.click();
         return new FlightsTab();
     }
 
     public HireCarTab openHireCarTab() {
-        waitForClickabilityAndClick_webElement(hireCarTAb);
+        hireCarTAb.click();
         return new HireCarTab();
     }
 
     public HotelsTab openHotelsTab() {
-        waitForClickabilityAndClick_webElement(hotelsTab);
+        hotelsTab.click();
         return new HotelsTab();
     }
 
     public String getLoggedUserEmail() {
-        return waitForVisibilityAndGetText_webElement(loggedUserLabel);
+        return loggedUserLabel.getText();
     }
 }

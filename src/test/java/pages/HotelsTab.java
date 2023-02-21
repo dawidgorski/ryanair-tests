@@ -32,13 +32,13 @@ public class HotelsTab extends MainPage {
     }
 
     public HotelsTab enterLocationOrProperty(String locationOrProperty) {
-        waitForVisibilityAndSendKeys_webElement(destinationOrPropertyTextField, locationOrProperty);
-        waitForClickabilityAndClick_webElement(dropDownFirstResult);
+        waitForVisibilityAndSendKeys_webElement(destinationOrPropertyTextField, locationOrProperty); //wait for hotelsTab tab
+        waitForClickabilityAndClick_webElement(dropDownFirstResult); //wait for dropdown menu
         return this;
     }
 
     public HotelsTab enterSimpleCheckInAndCheckout(String todayDate, String tomorrowDate) {
-        waitForClickabilityAndClick_webElement(checkInDateDropDownMenu);
+        checkInDateDropDownMenu.click();
         waitForClickabilityAndClick(By.cssSelector("[role='tooltip'] [data-id='" + todayDate + "']"));
         waitForClickabilityAndClick(By.cssSelector("[role='tooltip'] [data-id='" + tomorrowDate + "']"));
         return this;
@@ -49,7 +49,7 @@ public class HotelsTab extends MainPage {
     }
 
     public HotelsTab clickSearchButton() {
-        waitForClickabilityAndClick_webElement(searchButton);
+        searchButton.click();
         return this;
     }
 
