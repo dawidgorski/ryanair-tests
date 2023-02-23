@@ -15,49 +15,39 @@ public class SignupTest extends TestConfig {
 
     @Test
     public void signupCorrectCredentialsAccountExist() {
-        String emailError = mainPage
-                .openSignUpWindow()
-                .signUpWithCredentials("test@qa.team", "TeamTeam1")
-                .getEmailError();
-        assertEquals("User already exists", emailError);
+        SignupWindow signupWindow = mainPage.openSignUpWindow();
+        signupWindow.signUpWithCredentials("test@qa.team", "TeamTeam1");
+        assertEquals("User already exists", signupWindow.getEmailError());
     }
 
     @Test
     public void signupIncorrectEmail() {
-        String emailError = mainPage
-                .openSignUpWindow()
-                .signUpWithCredentials("test.team", "TeamTeam1")
-                .getEmailError();
-        assertEquals("Invalid email address format", emailError);
+        SignupWindow signupWindow = mainPage.openSignUpWindow();
+        signupWindow.signUpWithCredentials("test.team", "TeamTeam1");
+        assertEquals("Invalid email address format", signupWindow.getEmailError());
     }
 
     @Test
     public void signupWithoutEmail() {
-        String emailError = mainPage
-                .openSignUpWindow()
-                .signUpWithCredentials("", "TeamTeam1")
-                .getEmailError();
-        assertEquals("Email address is required", emailError);
+        SignupWindow signupWindow = mainPage.openSignUpWindow();
+        signupWindow.signUpWithCredentials("", "TeamTeam1");
+        assertEquals("Email address is required", signupWindow.getEmailError());
     }
-
+    //no screenshot ?????
     @Test
     public void signupWithoutPassword() {
-        String passwordError = mainPage
-                .openSignUpWindow()
-                .signUpWithCredentials("test@qa.team", "")
-                .getPasswordError();
-        assertEquals("Password is required", passwordError);
+        SignupWindow signupWindow = mainPage.openSignUpWindow();
+        signupWindow.signUpWithCredentials("test@qa.team", "");
+        assertEquals("Password is required", signupWindow.getPasswordError());
     }
-
+    //no screenshot ?????
     @ParameterizedTest
     @CsvFileSource(resources = "wrong-password-date.csv")
     public void signupWithWrongPasswordAndGetPasswordErrors( boolean one_number_requirement, boolean eight_characters, boolean one_lower, boolean one_upper, String password) {
-        SignupWindow signupWindow = mainPage
-                .openSignUpWindow()
-                .signUpWithCredentials("test@qa.team", password);
+        SignupWindow signupWindow = mainPage.openSignUpWindow();
+        signupWindow.signUpWithCredentials("test@qa.team", password);
 
-        String passwordError = signupWindow.getPasswordError();
-        assertEquals("Please check the requirements on your right", passwordError);
+        assertEquals("Please check the requirements on your right", signupWindow.getPasswordError());
 
         List<Boolean> passwordErrorsList = signupWindow.getPasswordErrorsList();
 

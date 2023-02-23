@@ -2,6 +2,7 @@ package tests;
 
 import config.TestConfig;
 import org.junit.jupiter.api.Test;
+import pages.HotelsTab;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,22 +13,18 @@ public class FindHotelTest extends TestConfig {
 
     @Test
     public void showHotelsList() {
-        boolean visibilityOfRoomsList = mainPage
-                .openHotelsTab()
-                .enterLocationOrProperty("Berlin")
+        HotelsTab hotelsTab = mainPage.openHotelsTab();
+        hotelsTab.enterLocationOrProperty("Berlin")
                 .enterSimpleCheckInAndCheckout(getTodayDate(), getTomorrowDate())
-                .clickSearchButton()
-                .checkVisibilityOfRoomslist();
-        assertTrue(visibilityOfRoomsList);
+                .clickSearchButton();
+        assertTrue(hotelsTab.checkVisibilityOfRoomslist());
     }
 
     @Test
     public void searchHotelsWithoutDates() {
-        String checkInError = mainPage
-                .openHotelsTab()
-                .enterLocationOrProperty("Warsaw")
-                .clickSearchButton()
-                .getCheckInError();
-        assertEquals("Please select travel dates", checkInError);
+        HotelsTab hotelsTab = mainPage.openHotelsTab();
+        hotelsTab.enterLocationOrProperty("Warsaw")
+                .clickSearchButton();
+        assertEquals("Please select travel dates", hotelsTab.getCheckInError());
     }
 }
