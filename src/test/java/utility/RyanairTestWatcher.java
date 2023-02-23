@@ -1,11 +1,11 @@
 package utility;
 
+import io.qameta.allure.Attachment;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,17 +32,20 @@ public class RyanairTestWatcher implements TestWatcher {
     }
 
     public void testFailed(ExtensionContext context, Throwable cause) {
-        captureScreenshot(driver, context.getDisplayName(), "failure");
+        try {
+            captureScreenshot(driver, context.getDisplayName(), "failure");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void captureScreenshot(WebDriver driver, String fileName, String action) {
-        try {
-            new File(path).mkdirs();
-            try (FileOutputStream out = new FileOutputStream(path + File.separator + "screenshot-" + action + "-" + fileName + ".png")) {
-                out.write(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
-            }
-        } catch (IOException | WebDriverException e) {
-            System.out.println("screenshot failed:" + e.getMessage());
-        }
+    @Attachment(value = "Screenshot", type = "image/png")
+    public byte[] captureScreenshot(WebDriver driver, String fileName, String action) throws IOException {
+        new File(path).mkdirs();
+        FileOutputStream out = new FileOutputStream(path + File.separator + "screenshot-" + action + "-" + fileName + ".png");
+        byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        out.write(screenshot);
+        return screenshot;
+
     }
 }
