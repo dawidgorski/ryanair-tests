@@ -2,3 +2,6 @@
 /target/
 /.idea
 /screenshots
+/src/test/resources/tests/notes.txt
+/allure-results/
+/.allure/
