@@ -13,11 +13,10 @@ public class LoginTest extends TestConfig {
 
     @Test
     public void loginCorrectCredentials() {
-        String afterLoginVerificationHeader = mainPage
+        LoginWindow loginWindow = mainPage
                 .openLoginWindow()
-                .loginWithCredentials(correctEmail, correctPassword)
-                .getAfterLoginVerificationHeader();
-        assertEquals("Register this device", afterLoginVerificationHeader);
+                .loginWithCredentials(correctEmail, correctPassword);
+        assertEquals("Register this device", loginWindow.getAfterLoginVerificationHeader());
     }
 
     @Test

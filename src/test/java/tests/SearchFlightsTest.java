@@ -2,46 +2,42 @@ package tests;
 
 import config.TestConfig;
 import org.junit.jupiter.api.Test;
+import pages.FlightsTab;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utility.Actions.getDayAfterTomorrowDate;
 import static utility.Actions.getTomorrowDate;
 
 public class SearchFlightsTest extends TestConfig {
-
+    //no screenshot ?????
     @Test
     public void searchFlightExactDatesTodayTomorrowOneAdultCorrectData() {
-        boolean flightSummaryVisible = mainPage
-                .openFlightsTab()
+        FlightsTab flightsTab = mainPage.openFlightsTab();
+        flightsTab.openFlightsTab()
                 .setFlightDeparture("Warsaw Modlin")
                 .setFlightDestination("London Stansted")
                 .setExactDates(getTomorrowDate(), getDayAfterTomorrowDate())
-                .clickDoneAndSearchButton()
-                .ifSummaryContainerVisible();
-        assertTrue(flightSummaryVisible);
+                .clickDoneAndSearchButton();
+        assertTrue(flightsTab.ifSummaryContainerVisible());
     }
-
+    //no screenshot ?????
     @Test
     public void searchFlightFlexibleDatesOneAdultCorrectData() {
-        boolean destinationContainerVisible = mainPage
-                .openFlightsTab()
-                .setFlightDeparture("Warsaw Modlin")
+        FlightsTab flightsTab = mainPage.openFlightsTab();
+        flightsTab.setFlightDeparture("Warsaw Modlin")
                 .setFlightDestination("London Stansted")
                 .setFlexibleDates()
-                .clickDoneAndSearchButton()
-                .ifDestinationContainerVisible();
-        assertTrue(destinationContainerVisible);
+                .clickDoneAndSearchButton();
+        assertTrue(flightsTab.ifDestinationContainerVisible());
     }
-
+    //no screenshot ?????
     @Test
     public void searchFlightFlexibleDatesOneAdultNoResults() {
-        boolean noFlightsIconVisible = mainPage
-                .openFlightsTab()
-                .setFlightDeparture("Warsaw Modlin")
+        FlightsTab flightsTab = mainPage.openFlightsTab();
+        flightsTab.setFlightDeparture("Warsaw Modlin")
                 .setFlightDestination("Riga")
                 .setFlexibleDates()
-                .clickDoneAndSearchButton()
-                .ifNoFlightsIconVisible();
-        assertTrue(noFlightsIconVisible);
+                .clickDoneAndSearchButton();
+        assertTrue(flightsTab.ifNoFlightsIconVisible());
     }
 }
