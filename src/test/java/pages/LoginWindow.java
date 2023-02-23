@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -29,6 +30,7 @@ public class LoginWindow extends MainPage {
         super();
     }
 
+    @Step
     public LoginWindow loginWithCredentials(String email, String password) {
         waitForVisibilityAndSendKeys_webElement(emailTextField, email); //wait for popup loginwindow
         sendKeys_webElement(passwordTextField, password);
@@ -36,14 +38,17 @@ public class LoginWindow extends MainPage {
         return this;
     }
 
+    @Step
     public String getEmailError() {
         return emailErrorLabel.getText();
     }
 
+    @Step
     public String getPasswordError() {
         return passwordErrorLabel.getText();
     }
 
+    @Step
     public String getAfterLoginVerificationHeader() {
         return waitForVisibilityAndGetText_webElement(afterLoginVerificationHeader); // wait for header
 

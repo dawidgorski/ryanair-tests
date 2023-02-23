@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,24 +49,28 @@ public class FlightsTab extends MainPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step
     public FlightsTab setFlightDestination(String airport) {
         destinationButton.sendKeys(airport);
         waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
         return this;
     }
 
+    @Step
     public FlightsTab setFlightDeparture(String airport) {
         sendKeys_webElement(departureButton, airport);
         waitForClickabilityAndClick(By.xpath("//span[contains(text(),'" + airport + "')]"));
         return this;
     }
 
+    @Step
     public FlightsTab setExactDates(String departureDate, String returnDate) {
         waitForClickabilityAndClick(By.cssSelector("[class='datepicker__calendar datepicker__calendar--left'] [data-id='" + departureDate + "'] "));
         waitForClickabilityAndClick(By.cssSelector("[class='datepicker__calendar datepicker__calendar--left'] [data-id='" + returnDate + "'] "));
         return this;
     }
 
+    @Step
     public FlightsTab setFlexibleDates() {
         waitForClickabilityAndClick_webElement(flexibleDatesTab); //wait for open calendar
         monthsList.get(0).click();
@@ -74,20 +79,24 @@ public class FlightsTab extends MainPage {
         return this;
     }
 
+    @Step
     public FlightsTab clickDoneAndSearchButton() {
         doneButton.click();
         searchButton.click();
         return this;
     }
 
+    @Step
     public boolean ifSummaryContainerVisible() {
         return waitForVisibility_webElement(summaryContainer);
     }
 
+    @Step
     public boolean ifDestinationContainerVisible() {
         return waitForVisibility(By.cssSelector(".destination__container"));
     }
 
+    @Step
     public boolean ifNoFlightsIconVisible() {
         return waitForVisibility_webElement(noFlightsIcon);
     }

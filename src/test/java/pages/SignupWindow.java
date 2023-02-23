@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -31,6 +32,7 @@ public class SignupWindow extends MainPage {
         super();
     }
 
+    @Step
     public SignupWindow signUpWithCredentials(String email, String password) {
         waitForVisibilityAndSendKeys_webElement(emailTextField, email); //wait for popup signupwindow
         passwordTextField.sendKeys(password);
@@ -38,14 +40,17 @@ public class SignupWindow extends MainPage {
         return this;
     }
 
+    @Step
     public String getEmailError() {
         return waitForVisibilityAndGetText_webElement(emailErrorLabel); // wait for email error label
     }
 
+    @Step
     public String getPasswordError() {
         return passwordErrorLabel.getText();
     }
 
+    @Step
     public List<Boolean> getPasswordErrorsList() {
         return waitForVisibilityAllElementsAndGetErrorsList_webElement(passwordErrorsFieldList); //wait for password error hint
     }

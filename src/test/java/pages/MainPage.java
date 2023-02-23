@@ -1,10 +1,13 @@
 package pages;
 
 import config.DriverSingleton;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import static utility.Actions.waitForClickabilityAndClick_webElement;
 
 public class MainPage {
 
@@ -17,10 +20,10 @@ public class MainPage {
     private WebElement signUpButton;
 
     @FindBy(css = "button[aria-label='flights']")
-    private WebElement flightsTAb;
+    private WebElement flightsTab;
 
     @FindBy(css = "button[aria-label='Car Hire']")
-    private WebElement hireCarTAb;
+    private WebElement hireCarTab;
 
     @FindBy(css = "button[aria-label='hotels']")
     private WebElement hotelsTab;
@@ -33,31 +36,38 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step
     public SignupWindow openSignUpWindow() {
         signUpButton.click();
+
         return new SignupWindow();
     }
 
+    @Step
     public LoginWindow openLoginWindow() {
         logInButton.click();
         return new LoginWindow();
     }
 
+    @Step
     public FlightsTab openFlightsTab() {
-        flightsTAb.click();
+        flightsTab.click();
         return new FlightsTab();
     }
 
+    @Step
     public HireCarTab openHireCarTab() {
-        hireCarTAb.click();
+        hireCarTab.click();
         return new HireCarTab();
     }
 
+    @Step
     public HotelsTab openHotelsTab() {
         hotelsTab.click();
         return new HotelsTab();
     }
 
+    @Step
     public String getLoggedUserEmail() {
         return loggedUserLabel.getText();
     }

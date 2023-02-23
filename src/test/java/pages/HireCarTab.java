@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -23,6 +24,7 @@ public class HireCarTab extends MainPage {
         super();
     }
 
+    @Step
     public HireCarTab searchCarDefaultDates(String location) {
         waitForVisibilityAndSendKeys_webElement(pickUpLocationTextField, location); //wait for hireCar tab
         waitForClickabilityAndClick_webElement(firstLocationResult); //wait for dropdown menu
@@ -30,6 +32,7 @@ public class HireCarTab extends MainPage {
         return this;
     }
 
+    @Step
     public boolean isResultsContainerAvailable() {
         return waitForVisibility_webElement(carResultsContainer);
     }
