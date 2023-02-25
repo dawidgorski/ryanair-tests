@@ -1,10 +1,11 @@
 package tests;
 
 import config.TestConfig;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import pages.HireCarTab;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.testng.Assert.assertTrue;
+
 
 public class HireCarTest extends TestConfig {
 

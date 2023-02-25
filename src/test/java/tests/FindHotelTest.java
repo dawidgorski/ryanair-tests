@@ -1,11 +1,11 @@
 package tests;
 
 import config.TestConfig;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import pages.HotelsTab;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 import static utility.Actions.getTodayDate;
 import static utility.Actions.getTomorrowDate;
 

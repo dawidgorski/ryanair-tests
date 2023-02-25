@@ -1,14 +1,19 @@
 package tests;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import config.TestConfig;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import pages.SignupWindow;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.testng.Assert.assertEquals;
+import static utility.Actions.getDataFromCsv;
+
 
 public class SignupTest extends TestConfig {
 
@@ -33,6 +38,7 @@ public class SignupTest extends TestConfig {
         signupWindow.signUpWithCredentials("", "TeamTeam1");
         assertEquals("Email address is required", signupWindow.getEmailError());
     }
+
     //no screenshot ?????
     @Test
     public void signupWithoutPassword() {
@@ -40,10 +46,17 @@ public class SignupTest extends TestConfig {
         signupWindow.signUpWithCredentials("test@qa.team", "");
         assertEquals("Password is required", signupWindow.getPasswordError());
     }
-    //no screenshot ?????
-    @ParameterizedTest
-    @CsvFileSource(resources = "wrong-password-date.csv")
-    public void signupWithWrongPasswordAndGetPasswordErrors( boolean one_number_requirement, boolean eight_characters, boolean one_lower, boolean one_upper, String password) {
+
+
+
+    @DataProvider(name = "wrongPasswords")
+    public static Object[][] getData() throws IOException, CsvException {
+        return getDataFromCsv("src/test/resources/tests/wrong-password-date.csv");
+    }
+
+//    no screenshot ?????
+    @Test(dataProvider = "wrongPasswords")
+    public void signupWithWrongPasswordAndGetPasswordErrors( String one_number_requirement, String eight_characters, String one_lower, String one_upper, String password) {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("test@qa.team", password);
 
@@ -51,10 +64,10 @@ public class SignupTest extends TestConfig {
 
         List<Boolean> passwordErrorsList = signupWindow.getPasswordErrorsList();
 
-        assertEquals(one_number_requirement, passwordErrorsList.get(0), "At least one number");
-        assertEquals(eight_characters, passwordErrorsList.get(1), "At least 8 characters");
-        assertEquals(one_lower, passwordErrorsList.get(2), "At least one lower case letter");
-        assertEquals(one_upper, passwordErrorsList.get(3), "At least one upper case letter");
+        assertEquals(Boolean.parseBoolean(one_number_requirement), passwordErrorsList.get(0), "At least one number");
+        assertEquals(Boolean.parseBoolean(eight_characters), passwordErrorsList.get(1), "At least 8 characters");
+        assertEquals(Boolean.parseBoolean(one_lower), passwordErrorsList.get(2), "At least one lower case letter");
+        assertEquals(Boolean.parseBoolean(one_upper), passwordErrorsList.get(3), "At least one upper case letter");
     }
 
 

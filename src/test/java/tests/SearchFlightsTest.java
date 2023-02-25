@@ -1,10 +1,10 @@
 package tests;
 
 import config.TestConfig;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import pages.FlightsTab;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.testng.Assert.assertTrue;
 import static utility.Actions.getDayAfterTomorrowDate;
 import static utility.Actions.getTomorrowDate;
 
