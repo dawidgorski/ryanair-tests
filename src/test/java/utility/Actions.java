@@ -1,5 +1,7 @@
 package utility;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import config.DriverSingleton;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -8,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -127,6 +131,22 @@ public class Actions {
     public void scrollDown(String cssSelector) {
         JavascriptExecutor js = (JavascriptExecutor) DriverSingleton.getInstance();
         js.executeScript("document.querySelector('" + cssSelector + "').scrollTop=200");
+    }
+
+    public static String[][] getDataFromCsv(String path) throws IOException, CsvException {
+        CSVReader readcsv = new CSVReader(new FileReader(path));
+        String[] nextLine;
+        String[][] listToReturn = new String[15][5];
+        int i =0;
+        while ((nextLine = readcsv.readNext()) != null) {
+            int j = 0;
+            for(String word:nextLine){
+                listToReturn[i][j] =word;
+                j++;
+            }
+            i++;
+        }
+        return listToReturn;
     }
 
 }
