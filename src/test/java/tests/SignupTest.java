@@ -1,13 +1,11 @@
 package tests;
 
-import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import config.TestConfig;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.SignupWindow;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
