@@ -1,11 +1,10 @@
 package config;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import utility.PropertiesLoader;
 
@@ -46,25 +45,25 @@ public final class DriverSingleton {
         if (browserName.equals("firefox")) {
             if (headless) {
                 FirefoxOptions options = new FirefoxOptions();
-                options.setHeadless(true);
-                return new FirefoxDriver(options);
+                options.addArguments("-headless");
+                return WebDriverManager.firefoxdriver().capabilities(options).create();
             }
-            return new FirefoxDriver();
+            return WebDriverManager.firefoxdriver().create();
         } else if (browserName.equals("edge")) {
             if (headless) {
                 EdgeOptions options = new EdgeOptions();
-                options.setHeadless(true);
-                return new EdgeDriver(options);
+                options.addArguments("--headless=new");
+                return WebDriverManager.edgedriver().capabilities(options).create();
             }
-            return new EdgeDriver();
+            return WebDriverManager.edgedriver().create();
         } else {
             if (headless) {
                 ChromeOptions options = new ChromeOptions();
-                options.setHeadless(true);
-                return new ChromeDriver(options);
+                options.addArguments("--headless=new");
+                return WebDriverManager.chromedriver().capabilities(options).create();
             }
 
         }
-        return new ChromeDriver();
+        return WebDriverManager.chromedriver().create();
     }
 }
