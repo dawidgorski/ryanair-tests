@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
-<suite name="Functional tests" verbose="1" >
+<suite name="Functional tests" verbose="1" parallel="false">
     <listeners>
         <listener class-name="utility.RyanAirTestListener"></listener>
     </listeners>
 
 
-    <test thread-count="1" name="login" >
+    <test thread-count="1" name="login">
         <classes>
             <class name="tests.LoginTest" />
         </classes>
