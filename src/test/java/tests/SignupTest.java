@@ -49,7 +49,7 @@ public class SignupTest extends TestConfig {
 
     @DataProvider(name = "wrongPasswords")
     public static Object[][] getData() throws IOException, CsvException {
-        return getDataFromCsv("src/test/resources/tests/wrong-password-date.csv");
+        return getDataFromCsv("src/test/resources/data/wrong-password-date.csv");
     }
 
 //    no screenshot ?????
