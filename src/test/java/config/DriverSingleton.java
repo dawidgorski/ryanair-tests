@@ -1,7 +1,6 @@
 package config;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -20,13 +19,16 @@ public final class DriverSingleton {
     public static WebDriver getInstance() {
         if (instance == null) {
             String browserName;
-            boolean headless;
             try {
-                browserName = PropertiesLoader.loadProperty("browser.name");
-                headless = Boolean.parseBoolean(PropertiesLoader.loadProperty("browser.headless"));
-
+                browserName = PropertiesLoader.loadProperty("browser");
             } catch (IOException e) {
                 browserName = "chrome";
+            }
+            boolean headless;
+            try {
+                headless = Boolean.parseBoolean(PropertiesLoader.loadProperty("headless"));
+            } catch (IOException e) {
+                e.printStackTrace();
                 headless = false;
             }
             instance = browserFactory(browserName, headless);
