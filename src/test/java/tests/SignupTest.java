@@ -16,6 +16,11 @@ import static utility.Actions.getDataFromCsv;
 public class SignupTest extends TestConfig {
 
 
+    @DataProvider(name = "wrongPasswords")
+    public static Object[][] getData() throws IOException, CsvException {
+        return getDataFromCsv("src/test/resources/data/wrong-password-date.csv");
+    }
+
     @Test
     public void signupCorrectCredentialsAccountExist() {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
@@ -45,16 +50,9 @@ public class SignupTest extends TestConfig {
         assertEquals("Password is required", signupWindow.getPasswordError());
     }
 
-
-
-    @DataProvider(name = "wrongPasswords")
-    public static Object[][] getData() throws IOException, CsvException {
-        return getDataFromCsv("src/test/resources/data/wrong-password-date.csv");
-    }
-
-//    no screenshot ?????
+    //    no screenshot ?????
     @Test(dataProvider = "wrongPasswords")
-    public void signupWithWrongPasswordAndGetPasswordErrors( String one_number_requirement, String eight_characters, String one_lower, String one_upper, String password) {
+    public void signupWithWrongPasswordAndGetPasswordErrors(String one_number_requirement, String eight_characters, String one_lower, String one_upper, String password) {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("test@qa.team", password);
 

@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
 public class Actions {
 
     static WebDriverWait wait;
-    
-    private static WebDriverWait getWebDriverWaitInstance(){
+
+    private static WebDriverWait getWebDriverWaitInstance() {
         return new WebDriverWait(DriverSingleton.getInstance(), Duration.ofSeconds(5));
     }
 
     public static boolean waitForVisibility(By by) {
         wait = getWebDriverWaitInstance();
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by))!=null;
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(by)) != null;
     }
 
     public static boolean waitForVisibility_webElement(WebElement element) {
@@ -128,25 +128,25 @@ public class Actions {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public void scrollDown(String cssSelector) {
-        JavascriptExecutor js = (JavascriptExecutor) DriverSingleton.getInstance();
-        js.executeScript("document.querySelector('" + cssSelector + "').scrollTop=200");
-    }
-
     public static String[][] getDataFromCsv(String path) throws IOException, CsvException {
         CSVReader readcsv = new CSVReader(new FileReader(path));
         String[] nextLine;
         String[][] listToReturn = new String[15][5];
-        int i =0;
+        int i = 0;
         while ((nextLine = readcsv.readNext()) != null) {
             int j = 0;
-            for(String word:nextLine){
-                listToReturn[i][j] =word;
+            for (String word : nextLine) {
+                listToReturn[i][j] = word;
                 j++;
             }
             i++;
         }
         return listToReturn;
+    }
+
+    public void scrollDown(String cssSelector) {
+        JavascriptExecutor js = (JavascriptExecutor) DriverSingleton.getInstance();
+        js.executeScript("document.querySelector('" + cssSelector + "').scrollTop=200");
     }
 
 }

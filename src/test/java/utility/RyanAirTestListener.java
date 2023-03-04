@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class RyanAirTestListener implements ITestListener {
 
-    private String path = "screenshots";
+    private final String path = "screenshots";
 
     public void onTestFailure(ITestResult result) {
         System.out.println("test failed- " + result.getName());
