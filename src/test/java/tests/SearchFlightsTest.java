@@ -9,7 +9,7 @@ import static utility.Actions.getDayAfterTomorrowDate;
 import static utility.Actions.getTomorrowDate;
 
 public class SearchFlightsTest extends TestConfig {
-    //no screenshot ?????
+
     @Test
     public void searchFlightExactDatesTodayTomorrowOneAdultCorrectData() {
         FlightsTab flightsTab = mainPage.openFlightsTab();
@@ -20,7 +20,7 @@ public class SearchFlightsTest extends TestConfig {
                 .clickDoneAndSearchButton();
         assertTrue(flightsTab.ifSummaryContainerVisible());
     }
-    //no screenshot ?????
+
     @Test
     public void searchFlightFlexibleDatesOneAdultCorrectData() {
         FlightsTab flightsTab = mainPage.openFlightsTab();
@@ -30,7 +30,7 @@ public class SearchFlightsTest extends TestConfig {
                 .clickDoneAndSearchButton();
         assertTrue(flightsTab.ifDestinationContainerVisible());
     }
-    //no screenshot ?????
+
     @Test
     public void searchFlightFlexibleDatesOneAdultNoResults() {
         FlightsTab flightsTab = mainPage.openFlightsTab();
