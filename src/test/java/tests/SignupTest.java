@@ -2,6 +2,7 @@ package tests;
 
 import com.opencsv.exceptions.CsvException;
 import config.TestConfig;
+import io.qameta.allure.Description;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.SignupWindow;
@@ -42,7 +43,7 @@ public class SignupTest extends TestConfig {
         assertEquals("Email address is required", signupWindow.getEmailError());
     }
 
-    //no screenshot ?????
+
     @Test
     public void signupWithoutPassword() {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
@@ -50,8 +51,9 @@ public class SignupTest extends TestConfig {
         assertEquals("Password is required", signupWindow.getPasswordError());
     }
 
-    //    no screenshot ?????
+
     @Test(dataProvider = "wrongPasswords")
+    @Description("Parameters: arg[0]=one_number_requirement, arg[1]= eight_characters, arg[2]= one_lower, arg[3]= one_upper, arg[4]= password")
     public void signupWithWrongPasswordAndGetPasswordErrors(String one_number_requirement, String eight_characters, String one_lower, String one_upper, String password) {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("test@qa.team", password);
