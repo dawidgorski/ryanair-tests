@@ -9,5 +9,5 @@
 
 ## Jenkins report
 ![Alt text](jenkins_reports.PNG "jenkins reports")
-## Allure failed report
+## Allure failed test report
 ![Alt text](jenkins_allure_failed_test.PNG "allure failed test")
