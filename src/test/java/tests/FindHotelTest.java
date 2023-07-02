@@ -25,6 +25,6 @@ public class FindHotelTest extends TestConfig {
         HotelsTab hotelsTab = mainPage.openHotelsTab();
         hotelsTab.enterLocationOrProperty("Warsaw")
                 .clickSearchButton();
-        assertEquals("Please select travel dates", hotelsTab.getCheckInError());
+        assertEquals(hotelsTab.getCheckInError(), "Please select travel dates");
     }
 }

@@ -17,10 +17,10 @@ public class LoginWindow extends MainPage {
     @FindBy(xpath = "//button[contains(text(),'Log in')]")
     private WebElement logInConfirmButton;
 
-    @FindBy(css = "ry-input-d[name='email'] span.b2")
+    @FindBy(css = "ry-input-d[name='email'] span.body-l-lg.body-l-sm.ng-star-inserted._error")
     private WebElement emailErrorLabel;
 
-    @FindBy(css = "ry-input-d[name='password'] span.b2")
+    @FindBy(css = "ry-input-d[name='password'] span.body-l-lg.body-l-sm.ng-star-inserted._error")
     private WebElement passwordErrorLabel;
 
     @FindBy(xpath = "//h3[contains(text(),'Register this device')]")

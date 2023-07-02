@@ -5,18 +5,15 @@ import org.testng.annotations.Test;
 import pages.FlightsTab;
 
 import static org.testng.Assert.assertTrue;
-import static utility.Actions.getDayAfterTomorrowDate;
-import static utility.Actions.getTomorrowDate;
-
 public class SearchFlightsTest extends TestConfig {
 
     @Test
-    public void searchFlightExactDatesTodayTomorrowOneAdultCorrectData() {
+    public void searchFlightExactDateOneAdultCorrectData() {
         FlightsTab flightsTab = mainPage.openFlightsTab();
-        flightsTab.openFlightsTab()
+        flightsTab
                 .setFlightDeparture("Warsaw Modlin")
                 .setFlightDestination("London Stansted")
-                .setExactDates(getTomorrowDate(), getDayAfterTomorrowDate())
+                .setFirstAvailableDates()
                 .clickDoneAndSearchButton();
         assertTrue(flightsTab.ifSummaryContainerVisible());
     }

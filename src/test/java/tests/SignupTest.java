@@ -26,21 +26,21 @@ public class SignupTest extends TestConfig {
     public void signupCorrectCredentialsAccountExist() {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("test@qa.team", "TeamTeam1");
-        assertEquals("User already exists", signupWindow.getEmailError());
+        assertEquals(signupWindow.getEmailError(), "User already exists");
     }
 
     @Test
     public void signupIncorrectEmail() {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("test.team", "TeamTeam1");
-        assertEquals("Invalid email address format", signupWindow.getEmailError());
+        assertEquals(signupWindow.getEmailError(), "Invalid email address format");
     }
 
     @Test
     public void signupWithoutEmail() {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("", "TeamTeam1");
-        assertEquals("Email address is required", signupWindow.getEmailError());
+        assertEquals(signupWindow.getEmailError(), "Email address is required");
     }
 
 
@@ -48,7 +48,7 @@ public class SignupTest extends TestConfig {
     public void signupWithoutPassword() {
         SignupWindow signupWindow = mainPage.openSignUpWindow();
         signupWindow.signUpWithCredentials("test@qa.team", "");
-        assertEquals("Password is required", signupWindow.getPasswordError());
+        assertEquals(signupWindow.getPasswordError(), "Password is required");
     }
 
 
@@ -62,10 +62,10 @@ public class SignupTest extends TestConfig {
 
         List<Boolean> passwordErrorsList = signupWindow.getPasswordErrorsList();
 
-        assertEquals(Boolean.parseBoolean(one_number_requirement), passwordErrorsList.get(0), "At least one number");
-        assertEquals(Boolean.parseBoolean(eight_characters), passwordErrorsList.get(1), "At least 8 characters");
-        assertEquals(Boolean.parseBoolean(one_lower), passwordErrorsList.get(2), "At least one lower case letter");
-        assertEquals(Boolean.parseBoolean(one_upper), passwordErrorsList.get(3), "At least one upper case letter");
+        assertEquals(passwordErrorsList.get(0), Boolean.parseBoolean(one_number_requirement),"At least one number");
+        assertEquals(passwordErrorsList.get(1), Boolean.parseBoolean(eight_characters), "At least 8 characters");
+        assertEquals(passwordErrorsList.get(2), Boolean.parseBoolean(one_lower), "At least one lower case letter");
+        assertEquals(passwordErrorsList.get(3), Boolean.parseBoolean(one_upper), "At least one upper case letter");
     }
 
 

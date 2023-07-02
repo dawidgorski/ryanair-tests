@@ -4,11 +4,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import static utility.Actions.*;
 
-public class HotelsTab extends MainPage {
+public class HotelsTab extends MainPage{
 
     @FindBy(id = "input-button__locations-or-properties")
     WebElement destinationOrPropertyTextField;
@@ -29,7 +28,7 @@ public class HotelsTab extends MainPage {
     WebElement roomsList;
 
     public HotelsTab() {
-        PageFactory.initElements(driver, this);
+       super();
     }
 
     @Step

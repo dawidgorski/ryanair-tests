@@ -19,10 +19,10 @@ public class SignupWindow extends MainPage {
     @FindBy(xpath = "//button[contains(text(),'Sign up')]")
     private WebElement signUpConfirmButton;
 
-    @FindBy(css = "ry-input-d[name='email'] span.b2._error")
+    @FindBy(css = "ry-input-d[name='email'] span._error")
     private WebElement emailErrorLabel;
 
-    @FindBy(css = "ry-input-d[name='password'] span.b2")
+    @FindBy(css = "ry-input-d[name='password'] span.body-l-lg.body-l-sm._error.ng-star-inserted")
     private WebElement passwordErrorLabel;
 
     @FindBy(css = "ry-auth-password-validation icon")

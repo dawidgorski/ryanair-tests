@@ -17,7 +17,7 @@ public class LoginTest extends TestConfig {
         LoginWindow loginWindow = mainPage
                 .openLoginWindow()
                 .loginWithCredentials(correctEmail, correctPassword);
-        assertEquals("Register this device", loginWindow.getAfterLoginVerificationHeader());
+        assertEquals(loginWindow.getAfterLoginVerificationHeader(), "Register this device");
     }
 
     @Test
@@ -25,8 +25,8 @@ public class LoginTest extends TestConfig {
         LoginWindow loginWindow = mainPage
                 .openLoginWindow()
                 .loginWithCredentials("", "");
-        assertEquals("Email address is required", loginWindow.getEmailError());
-        assertEquals("Password is required", loginWindow.getPasswordError());
+        assertEquals(loginWindow.getEmailError(),"Email address is required");
+        assertEquals(loginWindow.getPasswordError(), "Password is required");
     }
 
     @Test
@@ -34,7 +34,7 @@ public class LoginTest extends TestConfig {
         LoginWindow loginWindow = mainPage
                 .openLoginWindow()
                 .loginWithCredentials(correctEmail, "");
-        assertEquals("Password is required", loginWindow.getPasswordError());
+        assertEquals(loginWindow.getPasswordError(), "Password is required");
     }
 
     @Test
@@ -42,7 +42,7 @@ public class LoginTest extends TestConfig {
         LoginWindow loginWindow = mainPage
                 .openLoginWindow()
                 .loginWithCredentials("", correctPassword);
-        assertEquals("Email address is required", loginWindow.getEmailError());
+        assertEquals(loginWindow.getEmailError(), "Email address is required");
     }
 
 }
